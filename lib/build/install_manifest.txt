@@ -1,2 +1,0 @@
-/usr/local/lib/libdcisink.so
-/usr/local/include/dci_sink.h
