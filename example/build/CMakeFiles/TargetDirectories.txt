@@ -1,0 +1,4 @@
+/home/yaxiong/research/dci_sink/example/build/CMakeFiles/server.dir
+/home/yaxiong/research/dci_sink/example/build/CMakeFiles/client.dir
+/home/yaxiong/research/dci_sink/example/build/CMakeFiles/edit_cache.dir
+/home/yaxiong/research/dci_sink/example/build/CMakeFiles/rebuild_cache.dir

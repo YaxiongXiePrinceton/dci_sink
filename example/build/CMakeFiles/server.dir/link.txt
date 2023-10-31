@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/server.dir/remote_server.c.o -o server  -ldcisink -lpthread 

@@ -1,0 +1,7 @@
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/dcisink.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/edit_cache.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/rebuild_cache.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/list_install_components.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/install.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/install/local.dir
+/home/yaxiong/research/dci_sink/lib/build/CMakeFiles/install/strip.dir
