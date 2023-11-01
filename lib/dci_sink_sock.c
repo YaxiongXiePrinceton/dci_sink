@@ -18,6 +18,8 @@
 
 #include "dci_sink_sock.h"
 
+extern bool go_exit;
+
 // set sock in non-block mode
 void sock_setnonblocking(int sockfd) {
   int flag = fcntl(sockfd, F_GETFL, 0);
@@ -209,4 +211,87 @@ struct sockaddr_in sock_create_serv_addr(char serv_IP[40], int serv_port) {
   }
 
   return servaddr;
+}
+
+int sock_connectServer_w_config_udp(char serv_IP[40], int serv_port) {
+  int sockfd;
+  char buffer[1400];
+  struct sockaddr_in servaddr;
+
+  // Create UDP socket
+  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0) {
+    perror("socket creation failed");
+    exit(EXIT_FAILURE);
+  }
+
+  sock_setnonblocking(sockfd);
+
+  // Set server address
+  memset(&servaddr, 0, sizeof(servaddr));
+  servaddr.sin_family = AF_INET;
+  servaddr.sin_port = htons(serv_port);
+  // servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");//服务器IP地址
+  if (inet_pton(AF_INET, serv_IP, &(servaddr.sin_addr)) <= 0) {
+    perror("Invalid server IP address");
+    exit(EXIT_FAILURE);
+  }
+
+  buffer[0] = (char)0xCC;
+  buffer[1] = (char)0xCC;
+  buffer[2] = (char)0xCC;
+  buffer[3] = (char)0xCC;
+
+  // Socket
+  sendto(sockfd, (char *)buffer, 4, 0, (const struct sockaddr *)&servaddr,
+         sizeof(servaddr));
+  sendto(sockfd, (char *)buffer, 4, 0, (const struct sockaddr *)&servaddr,
+         sizeof(servaddr));
+
+  int nof_serv_pkt = 0;
+  while (!go_exit) {
+    unsigned int len = sizeof(servaddr);
+    int recvLen = recvfrom(sockfd, (char *)buffer, 1400, 0,
+                           (struct sockaddr *)&servaddr, &len);
+    if (recvLen > 0) {
+      if (buffer[0] == (char)0xAA && buffer[1] == (char)0xAA &&
+          buffer[2] == (char)0xAA && buffer[3] == (char)0xAA) {
+        nof_serv_pkt++;
+      }
+      if (nof_serv_pkt >= 2) {
+        break;
+      }
+    }
+    usleep(100000);
+  }
+
+  return sockfd;
+}
+
+// close the connection with the server
+// notify the server about it
+int sock_close_and_notify_udp(int sockfd) {
+  char buffer[1400];
+  struct sockaddr_in servaddr;
+  int PORT = 6767;
+
+  // Set server address
+  memset(&servaddr, 0, sizeof(servaddr));
+  servaddr.sin_family = AF_INET;
+  servaddr.sin_port = htons(PORT);
+  servaddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // 服务器IP地址
+
+  buffer[0] = (char)0xFF;
+  buffer[1] = (char)0xFF;
+  buffer[2] = (char)0xFF;
+  buffer[3] = (char)0xFF;
+
+  sendto(sockfd, (char *)buffer, 4, 0, (const struct sockaddr *)&servaddr,
+         sizeof(servaddr));
+  sendto(sockfd, (char *)buffer, 4, 0, (const struct sockaddr *)&servaddr,
+         sizeof(servaddr));
+  sendto(sockfd, (char *)buffer, 4, 0, (const struct sockaddr *)&servaddr,
+         sizeof(servaddr));
+
+  return 0;
 }

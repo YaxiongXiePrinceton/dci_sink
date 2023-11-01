@@ -15,6 +15,9 @@
 #include <unistd.h>
 
 #include "dci_sink_def.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // the ring buffer that stores the dci of a single cell
 typedef struct {
@@ -35,19 +38,24 @@ typedef struct {
 /* The combination of multiple ring buffers that
  * store the dci with Carrier Aggregation Implemented */
 typedef struct {
-  bool     ca_ready;
-  int      header;
-  int      tail;
-  int      nof_cell;
+  bool ca_ready;
+  int header;
+  int tail;
+  int nof_cell;
   uint64_t curr_time;
   uint16_t rnti;
 
   ngscope_dci_sink_cell_t cell_dci[MAX_NOF_CELL];
-  pthread_mutex_t         mutex;
+  pthread_mutex_t mutex;
 } ngscope_dci_sink_CA_t;
 
-void ngscope_dciSink_ringBuf_init(ngscope_dci_sink_CA_t* q);
-int  ngscope_dciSink_ringBuf_update_config(ngscope_dci_sink_CA_t* q, cell_config_t* cell_config);
-int  ngscope_dciSink_ringBuf_insert_dci(ngscope_dci_sink_CA_t* q, ue_dci_t* ue_dci);
+void ngscope_dciSink_ringBuf_init(ngscope_dci_sink_CA_t *q);
+int ngscope_dciSink_ringBuf_update_config(ngscope_dci_sink_CA_t *q,
+                                          cell_config_t *cell_config);
+int ngscope_dciSink_ringBuf_insert_dci(ngscope_dci_sink_CA_t *q,
+                                       ue_dci_t *ue_dci);
+#ifdef __cplusplus
+}
+#endif
 
 #endif
