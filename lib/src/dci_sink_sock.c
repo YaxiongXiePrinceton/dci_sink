@@ -130,8 +130,7 @@ void sock_update_client_list_addr(client_list_t *q, struct sockaddr_in *addr) {
 }
 
 /* Send a single DCI to the remote  */
-int sock_send_single_dci(ngscope_dci_sink_serv_t *q, ue_dci_t *ue_dci,
-                         int proto_v) {
+int sock_send_single_dci(ngscope_dci_sink_serv_t *q, ue_dci_t *ue_dci, int proto_v) {
   char buf[100];
   /**********************************************
   Common part of the data:

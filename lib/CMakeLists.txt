@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(dcisink)
+
+# include PUBLIC directories
+set(SINK_PUBLIC_INCLUDE_DIRECTORIES      include/ )
+set(SINK_PRIVATE_INCLUDE_DIRECTORIES     src/   )
+
+# Edv source files list
+file(GLOB_RECURSE SINK_SOURCE_FILES "src/*.c" "src/*.h")
+
+file(GLOB_RECURSE SINK_INCLUDE_FILES "include/*.h")
+
+# build the library
+add_library(${PROJECT_NAME} SHARED ${SINK_INCLUDE_FILES} ${SINK_SOURCE_FILES} )
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${SINK_PUBLIC_INCLUDE_DIRECTORIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${SINK_PRIVATE_INCLUDE_DIRECTORIES})
+
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+    PUBLIC_HEADER "${SINK_INCLUDE_FILES}"
+)
+
+# install (TARGETS ${PROJECT_NAME}
+#     RUNTIME DESTINATION bin
+    # LIBRARY DESTINATION lib
+    # ARCHIVE DESTINATION lib
+#     PUBLIC_HEADER DESTINATION include
+# )
+
+INSTALL (
+	TARGETS ${PROJECT_NAME}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
