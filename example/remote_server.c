@@ -11,13 +11,14 @@
 #include <unistd.h>
 
 
-#include "dci_sink.h"
+
+#include "dci_sink_serv.h"
+#include "dci_sink_sock.h"
+#include "dci_sink_def.h"
 
 bool go_exit = false;
 
 ngscope_dci_sink_serv_t dci_sink_serv;
-
-
 
 int main(int argc, char** argv){
 	sock_init_dci_sink(&dci_sink_serv, 6666);
