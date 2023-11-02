@@ -11,11 +11,10 @@
 #include <unistd.h>
 
 #include "dci_sink_client.h"
-#include "dci_sink_sock.h"
-#include "dci_sink_dci_recv.h"
 #include "dci_sink_ring_buffer.h"
 
 bool go_exit = false;
+
 ngscope_dci_sink_CA_t dci_CA_buf;
 
 int main(int argc, char** argv){
