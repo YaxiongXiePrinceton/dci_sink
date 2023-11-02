@@ -16,7 +16,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-
+extern bool go_exit;
 // set sock in non-block mode
 void sock_setnonblocking(int sockfd) {
   int flag = fcntl(sockfd, F_GETFL, 0);
