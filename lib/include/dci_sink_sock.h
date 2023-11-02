@@ -34,8 +34,6 @@ typedef struct {
   int sink_sockfd;           // serv sock filedescriptor
 } ngscope_dci_sink_serv_t;
 
-void sock_setnonblocking(int sockfd);
-bool sock_same_sock_addr(struct sockaddr_in *a, struct sockaddr_in *b);
 
 bool sock_init_dci_sink(ngscope_dci_sink_serv_t *q, int port);
 void sock_update_client_list_addr(client_list_t *q, struct sockaddr_in *addr);
@@ -43,8 +41,6 @@ void sock_update_client_list_addr(client_list_t *q, struct sockaddr_in *addr);
 int sock_send_config(ngscope_dci_sink_serv_t *q, cell_config_t *cell_config);
 int sock_send_single_dci(ngscope_dci_sink_serv_t *q, ue_dci_t *ue_dci,
                          int proto_v);
-
-struct sockaddr_in sock_create_serv_addr(char serv_IP[40], int serv_port);
 
 // The client connect with the server
 int sock_connectServer_w_config_udp(char serv_IP[40], int serv_port);
