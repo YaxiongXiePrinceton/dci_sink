@@ -176,3 +176,21 @@ int ngscope_dciSink_ringBuf_insert_dci(ngscope_dci_sink_CA_t *q,
   pthread_mutex_unlock(&q->mutex);
   return 1;
 }
+
+int ngscope_dciSink_ringBuf_header_updated(ngscope_dci_sink_CA_t *q, int header){
+  bool updated = false;
+  int new_header = header;
+  // insert dci to the ring buffer
+  pthread_mutex_lock(&q->mutex);
+  if(q->header != header){
+    updated = true;
+    new_header = q->header;
+  }
+  pthread_mutex_unlock(&q->mutex);
+  if(updated){
+    return new_header;
+  }else{
+    return -1;
+  }
+}
+ 
