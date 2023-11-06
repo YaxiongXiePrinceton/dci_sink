@@ -19,6 +19,10 @@
 #include "dci_sink_sock.h"
 #include "sock.h"
 
+#ifndef MSG_CONFIRM
+#define MSG_CONFIRM 0
+#endif
+
 extern bool go_exit;
 
 /***** CLIENT and Server handling *******/
