@@ -194,3 +194,12 @@ int ngscope_dciSink_ringBuf_header_updated(ngscope_dci_sink_CA_t *q, int header)
   }
 }
  
+ue_dci_t ngscope_dciSink_ringBuf_fetch_dci(ngscope_dci_sink_CA_t *q, int cell_idx, int header){
+  ue_dci_t fetched_dci;
+
+  pthread_mutex_lock(&q->mutex);
+  fetched_dci = q->cell_dci[cell_idx].dci[header];
+  pthread_mutex_unlock(&q->mutex);
+ 
+  return fetched_dci;
+}

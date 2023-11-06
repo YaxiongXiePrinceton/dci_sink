@@ -56,6 +56,8 @@ int ngscope_dciSink_ringBuf_insert_dci(ngscope_dci_sink_CA_t *q,
                                        ue_dci_t *ue_dci);
 
 int ngscope_dciSink_ringBuf_header_updated(ngscope_dci_sink_CA_t *q, int header);
+ue_dci_t ngscope_dciSink_ringBuf_fetch_dci(ngscope_dci_sink_CA_t *q, int cell_idx, int header);
+
 #ifdef __cplusplus
 }
 #endif
